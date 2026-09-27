@@ -1,0 +1,107 @@
+*Este proyecto ha sido creado como parte del currículo de 42 por fernfern.*
+
+# ft_printf
+
+## Descripción
+`ft_printf` es una reimplementación de la función estándar `printf` de la biblioteca `libc`. El objetivo principal es profundizar en el manejo de funciones variádicas en C (`stdarg.h`), el parseo estructurado de cadenas de formato y la gestión precisa de memoria y flujos de salida con bajo nivel (`write`).
+
+El proyecto cubre tanto la parte obligatoria como la totalidad de los bonus requeridos por el currículo de 42:
+- **Conversiones obligatorias:** `%c`, `%s`, `%p`, `%d`, `%i`, `%u`, `%x`, `%X`, `%%`.
+- **Banderas (Flags):** `-` (alineación a la izquierda), `0` (relleno con ceros), `.` (precisión), `#` (prefijo alternativo hexadecimal), `+` (signo explícito), `' '` (espacio para valores positivos).
+- **Dimensiones:** Ancho mínimo de campo (*field minimum width*).
+
+---
+
+## Instrucciones
+
+### Compilación
+La librería se compila usando `make`. El `Makefile` incluye las reglas estándar exigidas:
+
+```bash
+# Compila la librería libftprintf.a con soporte para la parte obligatoria
+make
+
+# Compila la librería libftprintf.a incluyendo la gestión completa de bonus
+make bonus
+
+# Elimina los archivos objeto (.o)
+make clean
+
+# Elimina los archivos objeto y la librería compilada libftprintf.a
+make fclean
+
+# Recompila la librería desde cero
+make re
+Uso
+Para utilizar la librería en un proyecto en C:
+
+Incluye el encabezado en tu código:
+
+C
+#include "ft_printf.h"
+Compila tu archivo principal vinculando libftprintf.a:
+
+Bash
+cc -Wall -Wextra -Werror main.c -L. -lftprintf -o test_printf
+./test_printf
+
+Decisiones Técnicas y Algoritmo
+
+1. Estructura de Datos (t_options)
+Para evitar la asignación dinámica de memoria (malloc) y garantizar cero fugas (zero leaks) y máxima velocidad de ejecución, los metadatos de formato se gestionan en una estructura alojada exclusivamente en el stack de llamadas:
+
+C
+typedef struct s_options
+{
+    int     hash;        // 1 si '#' está presente, 0 si no
+    int     left_align;  // 1 si '-' está presente, 0 si no
+    int     zero;        // 1 si '0' está presente, 0 si no
+    int     plus;        // 1 si '+' está presente, 0 si no
+    int     space;       // 1 si ' ' está presente, 0 si no
+    int     width;       // Valor numérico del ancho mínimo
+    int     dot;         // 1 si '.' está presente, 0 si no
+    int     precision;   // Valor numérico de la precisión tras el '.'
+    char    spec;        // Carácter identificador de conversión ('d', 'x', etc.)
+}   t_options;
+
+2. Flujo y Algoritmo de Parseo
+El algoritmo procesa la cadena de formato en un único paso secuencial (single-pass stream):
+
+Paso Directo: Todo carácter distinto de % se emite directamente a salida estándar acumulando el conteo de bytes.
+
+Detección y Parseo: Al encontrar %, se avanza el puntero de formato pasando su dirección por referencia (char **fmt). Una función de parseo itera reconociendo banderas, ancho y precisión hasta topar con un especificador válido (cspdiuxX%).
+
+Resolución de Conflictos: Antes de emitir datos, se aplican las reglas de precedencia estándar de POSIX:
+
+Si + está activo, anula la bandera ' ' (espacio).
+
+Si left_align (-) está activo, anula la bandera zero (0).
+
+En enteros (d, i, u, x, X), si se especifica precisión (dot == 1), la bandera zero queda desactivada.
+
+Cálculo de Padding y Emisión: Se calculan las dimensiones efectivas del dato en memoria (sin reservar strings innecesarios) para emitir el relleno previo, prefijos (0x, signos), la carga útil y el relleno posterior en orden estricto.
+
+Recursos
+
+Manuales del Sistema:
+
+man 3 printf: Comportamiento estándar, reglas de flags, precisión y casos límite.
+
+man 3 stdarg: Uso y ciclo de vida de va_start, va_arg, va_copy y va_end.
+
+Estándar:
+
+Especificación POSIX.1-2017 / ISO C99 para printf.
+
+Uso de Inteligencia Artificial (IA)
+En cumplimiento con las normativas académicas de 42, se declara el uso de herramientas de IA durante el desarrollo del proyecto:
+
+Áreas de aplicación:
+
+Diseño conceptual y corrección de la estructura de datos t_options para evitar asignaciones dinámicas innecesarias.
+
+Consulta y clarificación de la matriz de precedencia entre flags contradictorias (como el comportamiento de '0' frente a precisión en especificadores numéricos).
+
+Redacción y estructuración de la documentación técnica y el presente README.md.
+
+Implementación y pruebas: Todo el código fuente en C, la gestión del puntero variádico y los algoritmos de impresión fueron codificados, depurados y verificados manualmente contra la función de referencia de libc.
