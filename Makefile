@@ -9,8 +9,10 @@ RM = rm -f
 
 
 #SOURCES
-SRCS = 
-
+SRCS =	ft_printf.c \
+		print_args.c \
+		print_chars.c \
+		
 
 OBJS = $(SRCS:.c=.o)
 

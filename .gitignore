@@ -1,0 +1,19 @@
+# Objetos y binarios
+*.o
+*.a
+*.out
+
+# Basura del sistema y editores
+.DS_Store
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Tests y logs locales
+*.txt
+*.log
+a.out
+test
+tester
