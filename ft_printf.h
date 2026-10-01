@@ -6,7 +6,7 @@
 /*   By: fernfern <fernfern@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 16:59:07 by fernfern          #+#    #+#             */
-/*   Updated: 2026/09/30 19:38:11 by fernfern         ###   ########.fr       */
+/*   Updated: 2026/10/02 01:25:48 by fernfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		print_arg(va_list args, char **fmt);
 int		print_char(int c, t_flags *flags);
 int		print_str(const char *s, t_flags *flags);
 int		print_ptr(void *p, t_flags *flags);
-int		print_int(int n, t_flags *flags);
+int		print_int(long n, t_flags *flags);
 int		print_uint(unsigned int n, t_flags *flags);
 int		print_hex(unsigned int n, int uppercase, t_flags *flags);
 

@@ -11,9 +11,10 @@ RM = rm -f
 
 
 # COMMON SOURCES BOTH PARTS(MANDATORY AND BONUS)
-COMMON_SRCS =	ft_printf.c \
+COMMON_SRCS = ft_printf.c \
 		print_args.c \
-		print_chars.c 
+		print_chars.c \
+		print_numbers.c
 		
 # MADATORY SRC: with parser.c
 MANDATORY_SRCS = $(COMMON_SRCS) parser.c
