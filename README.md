@@ -51,18 +51,18 @@ Decisiones Técnicas y Algoritmo
 Para evitar la asignación dinámica de memoria (malloc) y garantizar cero fugas (zero leaks) y máxima velocidad de ejecución, los metadatos de formato se gestionan en una estructura alojada exclusivamente en el stack de llamadas:
 
 C
-typedef struct s_options
+typedef struct s_flags
 {
-    int     hash;        // 1 si '#' está presente, 0 si no
-    int     left_align;  // 1 si '-' está presente, 0 si no
-    int     zero;        // 1 si '0' está presente, 0 si no
-    int     plus;        // 1 si '+' está presente, 0 si no
-    int     space;       // 1 si ' ' está presente, 0 si no
-    int     width;       // Valor numérico del ancho mínimo
-    int     dot;         // 1 si '.' está presente, 0 si no
-    int     precision;   // Valor numérico de la precisión tras el '.'
-    char    spec;        // Carácter identificador de conversión ('d', 'x', etc.)
-}   t_options;
+	int		minus;		// Flag '-' (alineación izquierda)
+	int		zero;		// Flag '0' (relleno con ceros)
+	int		dot;		// Presencia de precisión '.' (1 si existe, 0 si no)
+	int		precision;	// Valor numérico de la precisión
+	int		width;		// Ancho mínimo de campo
+	int		hash;		// Flag '#' (prefijo 0x o 0X)
+	int		plus;		// Flag '+' (fuerza signo + en positivos)
+	int		space;		// Flag ' ' (espacio si no hay signo)
+	char	specifier;	// cspdiuxX%
+}		t_flags;
 
 2. Flujo y Algoritmo de Parseo
 El algoritmo procesa la cadena de formato en un único paso secuencial (single-pass stream):

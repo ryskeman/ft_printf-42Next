@@ -6,7 +6,7 @@
 /*   By: fernfern <fernfern@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/30 18:24:36 by fernfern          #+#    #+#             */
-/*   Updated: 2026/10/02 01:21:27 by fernfern         ###   ########.fr       */
+/*   Updated: 2026/10/02 02:01:01 by fernfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	format_conversor(char conv, va_list args, t_flags *flags)
 	{
 		flags->plus = 0;
 		flags->space = 0;
-		return (print_uint((long)va_arg(args, unsigned int), flags));
+		return (print_int((long)va_arg(args, unsigned int), flags));
 	}
 	if (conv == 'x')
 		return (print_hex(va_arg(args, unsigned int), 0, flags));

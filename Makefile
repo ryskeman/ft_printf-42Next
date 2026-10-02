@@ -14,7 +14,9 @@ RM = rm -f
 COMMON_SRCS = ft_printf.c \
 		print_args.c \
 		print_chars.c \
-		print_numbers.c
+		print_numbers.c \
+		print_hex.c \
+		print_ptr.c
 		
 # MADATORY SRC: with parser.c
 MANDATORY_SRCS = $(COMMON_SRCS) parser.c
