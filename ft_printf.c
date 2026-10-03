@@ -6,7 +6,7 @@
 /*   By: fernfern <fernfern@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/30 15:29:45 by fernfern          #+#    #+#             */
-/*   Updated: 2026/09/30 19:34:51 by fernfern         ###   ########.fr       */
+/*   Updated: 2026/10/03 02:13:15 by fernfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	ft_printf(char const *format, ...)
 
 	if (!format)
 		return (-1);
-	if (*format == '%' && *(format + 1) == '\0')
-		return (-1);
 	printed = 0;
 	va_start(args, format);
 	while (*format)
@@ -28,14 +26,15 @@ int	ft_printf(char const *format, ...)
 		if (*format == '%')
 		{
 			format++;
+			if (*format == '\0')
+				break ;
 			printed += print_arg(args, (char **)&format);
 		}
 		else
 			printed += ft_putchar_ret(*format, 1);
-		format++;
+		if (*format)
+			format++;
 	}
-	if (printed == -1)
-		return (va_end(args), -1);
 	va_end(args);
 	return (printed);
 }

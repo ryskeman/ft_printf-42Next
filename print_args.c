@@ -6,7 +6,7 @@
 /*   By: fernfern <fernfern@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/30 18:24:36 by fernfern          #+#    #+#             */
-/*   Updated: 2026/10/02 02:01:01 by fernfern         ###   ########.fr       */
+/*   Updated: 2026/10/03 14:24:40 by fernfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,11 @@ int	format_conversor(char conv, va_list args, t_flags *flags)
 int	print_arg(va_list args, char **fmt)
 {
 	t_flags	flags;
-	int		len;
 	char	conv;
 
 	parser(fmt, &flags);
 	conv = **fmt;
-	len = format_conversor(conv, args, &flags);
-	if (flags.minus && flags.width > len && conv != '%')
-		len += print_padding(' ', flags.width - len);
-	return (len);
+	if (!conv)
+		return (0);
+	return (format_conversor(conv, args, &flags));
 }
