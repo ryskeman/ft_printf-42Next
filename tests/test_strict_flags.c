@@ -1,5 +1,6 @@
-#include "../ft_printf.h"
+#include "ft_printf.h"
 #include <stdio.h>
+#include <limits.h>
 
 static void	compare(const char *desc, int r1, int r2)
 {
